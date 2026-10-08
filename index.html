@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Дашборд личного бюджета</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page">
+    <header class="page-header">
+      <h1>Личный бюджет</h1>
+      <p class="lead">
+        Курсы валют ЦБ РФ, мировые валюты и их роли, а также список
+        личных трат — на одном экране.
+      </p>
+    </header>
+
+    <main class="dashboard">
+
+      <!-- Виджет 1: курсы валют (ЦБ РФ) -->
+      <section class="card" aria-labelledby="rates-title">
+        <div class="card__head">
+          <h2 id="rates-title">Курсы валют ЦБ РФ</h2>
+          <button type="button" class="btn" id="rates-refresh">Обновить</button>
+        </div>
+
+        <p class="status" id="rates-status" role="status" aria-live="polite">Загрузка…</p>
+        <dl class="facts" id="rates-data" hidden></dl>
+
+        <p class="meta" id="rates-meta"></p>
+      </section>
+
+      <!-- Виджет 2: справка о валютах + рейтинг -->
+      <section class="card card--wide" aria-labelledby="world-title">
+        <div class="card__head">
+          <h2 id="world-title">Валюты мира</h2>
+          <button type="button" class="btn" id="world-refresh">Обновить справку</button>
+        </div>
+
+        <div class="world">
+          <!-- Слева: список валют с пояснениями -->
+          <div class="world__list">
+            <ul class="currency-list" id="currency-list"></ul>
+
+            <div class="currency-info" id="currency-info" hidden>
+              <h3 class="currency-info__title" id="currency-info-title"></h3>
+              <p class="currency-info__text" id="currency-info-text"></p>
+              <a class="currency-info__link" id="currency-info-link"
+                 href="#" target="_blank" rel="noopener noreferrer">Подробнее в Википедии →</a>
+            </div>
+          </div>
+
+          <!-- Справа: рейтинг мировых валют -->
+          <div class="world__rank">
+            <h3 class="world__subtitle">Доля в мировых резервах</h3>
+            <ul class="rank" id="rank-reserves"></ul>
+
+            <h3 class="world__subtitle world__subtitle--mt">Доля в международных расчётах</h3>
+            <ul class="rank" id="rank-payments"></ul>
+          </div>
+        </div>
+
+        <p class="meta" id="world-meta">
+          Данные: IMF COFER (III кв. 2025) и SWIFT (дек. 2025). Справка — Википедия.
+        </p>
+      </section>
+
+      <!-- Виджет 3: расходы (localStorage) -->
+      <section class="card card--wide" aria-labelledby="expenses-title">
+        <div class="card__head">
+          <h2 id="expenses-title">Мои расходы</h2>
+          <button type="button" class="btn" id="expenses-reset">Очистить</button>
+        </div>
+
+        <form class="input-row" id="expenses-form">
+          <div class="field field--grow">
+            <label for="expenses-name">На что</label>
+            <input type="text" id="expenses-name" maxlength="60"
+                   placeholder="Продукты, проезд, книги…" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="expenses-amount">Сумма</label>
+            <input type="number" id="expenses-amount" min="0" step="0.01"
+                   placeholder="0.00" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="expenses-currency">Валюта</label>
+            <select id="expenses-currency"></select>
+          </div>
+          <button type="submit" class="btn btn--primary">Добавить</button>
+        </form>
+
+        <p class="status" id="expenses-status" role="status" aria-live="polite"></p>
+        <ul class="expenses" id="expenses-list"></ul>
+
+        <p class="meta">
+          Источник: ваши заметки. Данные хранятся локально в браузере (localStorage).
+        </p>
+      </section>
+
+    </main>
+
+    <footer class="page-footer">
+      <p>
+        Курсы — ЦБ РФ через cbr-xml-daily.ru. Мировые валюты — IMF COFER и SWIFT.
+        Справка о валютах — Википедия.
+      </p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
